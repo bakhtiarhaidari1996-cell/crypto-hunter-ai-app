@@ -1,0 +1,1 @@
+# crypto-hunter-ai-app
