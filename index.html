@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101827">
+<title>Crypto Hunter AI — نسخه ۴ آزمایشی</title>
+<style>
+:root{color-scheme:dark;--bg:#101827;--panel:#172235;--line:#34445c;--text:#f3f6fb;--muted:#b5c2d4;--accent:#85e0c1}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,sans-serif}
+header{padding:16px;background:#0b1320;border-bottom:1px solid var(--line)}h1{font-size:1.25rem;margin:0}header p{margin:4px 0 0;color:var(--muted);font-size:.9rem}
+main{max-width:760px;margin:auto;padding:14px}
+nav{display:flex;gap:7px;overflow-x:auto;padding:5px 0 14px}nav button{white-space:nowrap}
+button{font:inherit;min-height:44px;border:1px solid var(--line);border-radius:11px;padding:9px 13px;background:#22324a;color:var(--text)}button.primary{background:var(--accent);color:#10221e;font-weight:700}
+nav button.active{border-color:var(--accent);color:var(--accent)}.page{display:none}.page.active{display:block}
+.panel,.item,.form{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:13px;margin:10px 0}
+.row{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}.muted{color:var(--muted);font-size:.9rem}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px}.num{font-size:1.4rem;font-weight:800}
+label{display:block;margin:9px 0 4px;color:var(--muted)}input,select,textarea{font:inherit;width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;background:#0f1928;color:var(--text)}textarea{min-height:75px}
+.form{display:none}.form.open{display:block}.empty{padding:15px;border:1px dashed var(--line);border-radius:12px;color:var(--muted);text-align:center;margin-top:10px}
+.note{background:#202b3b;border:1px solid var(--line);padding:11px;border-radius:12px;color:var(--muted);font-size:.9rem}
+footer{text-align:center;color:var(--muted);font-size:.8rem;padding:20px}
+@media(max-width:380px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><h1>🧭 Crypto Hunter AI</h1><p>نسخهٔ ۴ • کشف آنلاین با چند مسیر دریافت</p></header>
+<main>
+<div class="note">اطلاعات شخصی در مرورگر همین گوشی ذخیره می‌شود. بخش «کشف» برای دریافت فهرست آنلاین به اینترنت نیاز دارد؛ نتایج خودکار تضمین‌شده نیستند و باید از منبع رسمی تأیید شوند. عبارت بازیابی یا کلید خصوصی را هرگز وارد نکن.</div>
+<nav>
+<button class="active" data-page="home">خانه</button><button data-page="discover">🔎 کشف آنلاین</button><button data-page="airdrops">ایردراپ‌ها</button><button data-page="analysis">تحلیل</button><button data-page="planner">برنامه‌ریزی</button><button data-page="journal">یادگیری</button><button data-page="privacy">حریم خصوصی</button>
+</nav>
+<section id="home" class="page active">
+<div class="grid">
+<div class="stat">پروژه‌های ثبت‌شده<div class="num" id="statProjects">0</div></div>
+<div class="stat">کارهای باقی‌مانده<div class="num" id="statTasks">0</div></div>
+<div class="stat">تجربه‌ها<div class="num" id="statLessons">0</div></div>
+<div class="stat">نیازمند بررسی<div class="num" id="statReview">0</div></div>
+</div>
+<div class="panel"><h3>شروع سریع</h3><p class="muted">برای ثبت اولین پروژه، روی دکمهٔ زیر بزن.</p><button class="primary" data-jump="airdrops">+ افزودن ایردراپ</button></div>
+</section>
+
+<section id="discover" class="page">
+<h2>🔎 کشف پروژه‌های جدید</h2>
+<div class="note">با زدن دکمه، برنامه چند روش دریافت فید عمومی Airdrops.io را به‌ترتیب امتحان می‌کند. اگر همه روش‌ها مسدود باشند، از لینک‌های منابع پایین استفاده کن. نتایج هنوز تأییدشده نیستند.</div>
+<div class="row" style="margin:12px 0"><button class="primary" id="discoverBtn">جست‌وجوی تازه‌ترین موارد</button><span class="muted" id="discoverStatus" aria-live="polite">هنوز جست‌وجو نشده</span></div>
+<div class="grid" style="margin:10px 0">
+<a class="item" href="https://airdrops.io/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">Airdrops.io<br><span class="muted">فهرست و خبرهای ایردراپ</span></a>
+<a class="item" href="https://cryptorank.io/drophunting" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">CryptoRank Drop Hunting<br><span class="muted">فعالیت‌ها و وضعیت پاداش</span></a>
+<a class="item" href="https://airdropalert.com/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">AirdropAlert<br><span class="muted">فهرست فرصت‌ها</span></a>
+<a class="item" href="https://www.google.com/search?q=new+crypto+airdrop+testnet+points+October+2026" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">جست‌وجوی وب<br><span class="muted">پیدا کردن پروژه‌های تازه</span></a>
+</div>
+<div id="discoverResults"></div>
+</section>
+
+<section id="airdrops" class="page">
+<div class="row"><h2>فهرست ایردراپ‌ها</h2><button class="primary" id="addProject">+ افزودن پروژه</button></div>
+<form class="form" id="projectForm">
+<label>نام پروژه *</label><input name="name" required maxlength="100" placeholder="مثلاً HYPED">
+<label>وضعیت</label><select name="status"><option value="review">نیازمند بررسی</option><option value="active">در حال پیگیری</option><option value="listed">لیست شده</option><option value="claimed">کلیم شده</option><option value="paused">متوقف</option></select>
+<label>امتیاز یا تعداد توکن</label><input name="points" maxlength="80" placeholder="مثلاً 300000">
+<label>مهلت (اختیاری)</label><input name="deadline" type="date">
+<label>یادداشت</label><textarea name="notes" maxlength="1500"></textarea>
+<button class="primary" type="submit">ذخیره پروژه</button> <button type="button" data-cancel="projectForm">لغو</button>
+</form>
+<div id="projectList"></div>
+</section>
+<section id="analysis" class="page">
+<h2>تحلیل اولیه</h2><div class="note">تحلیل فعلاً بر اساس اطلاعاتی است که خودت ثبت می‌کنی؛ این بخش خبر زنده یا تأیید رسمی پروژه‌ها را دریافت نمی‌کند.</div><div id="analysisList"></div>
+</section>
+<section id="planner" class="page">
+<div class="row"><h2>برنامه‌ریزی</h2><button class="primary" id="addTask">+ افزودن کار</button></div>
+<form class="form" id="taskForm">
+<label>عنوان کار *</label><input name="title" required maxlength="120" placeholder="مثلاً بررسی خبر رسمی Torium">
+<label>تاریخ انجام</label><input name="due" type="date">
+<label>اولویت</label><select name="priority"><option>زیاد</option><option selected>متوسط</option><option>کم</option></select>
+<button class="primary" type="submit">ذخیره کار</button> <button type="button" data-cancel="taskForm">لغو</button>
+</form><div id="taskList"></div>
+</section>
+<section id="journal" class="page">
+<div class="row"><h2>دفتر یادگیری و خطا</h2><button class="primary" id="addLesson">+ ثبت تجربه</button></div>
+<form class="form" id="lessonForm">
+<label>عنوان تجربه *</label><input name="title" required maxlength="120" placeholder="مثلاً خطای باز نشدن برنامه">
+<label>چه اتفاقی افتاد؟ *</label><textarea name="happened" required maxlength="1800"></textarea>
+<label>چه چیزی امتحان شد؟</label><textarea name="solution" maxlength="1500"></textarea>
+<label>نتیجه</label><select name="result"><option>ناموفق</option><option>موفق</option><option>نامشخص</option></select>
+<button class="primary" type="submit">ذخیره تجربه</button> <button type="button" data-cancel="lessonForm">لغو</button>
+</form><div id="lessonList"></div>
+</section>
+<section id="privacy" class="page">
+<h2>حریم خصوصی و پشتیبان</h2><div class="note">اطلاعات این نسخه در حافظهٔ مرورگر همین دستگاه می‌ماند و به سرور ارسال نمی‌شود. هرکس به گوشی یا مرورگر دسترسی داشته باشد ممکن است به آن دسترسی پیدا کند. این نسخه قفل امنیتی پیشرفته ندارد.</div>
+<div class="panel"><h3>پشتیبان‌گیری</h3><p class="muted">از پروژه‌ها، کارها و تجربه‌ها فایل پشتیبان بساز تا بتوانی بعداً بازیابی کنی.</p><button class="primary" id="exportBtn">دانلود نسخهٔ پشتیبان</button><label>بازیابی فایل پشتیبان</label><input type="file" id="importFile" accept=".json,application/json"><button id="importBtn" style="margin-top:9px">بازیابی اطلاعات</button></div>
+<div class="panel"><h3>پاک کردن اطلاعات</h3><button id="clearBtn">پاک کردن همهٔ اطلاعات</button></div>
+</section>
+</main><footer>Crypto Hunter AI • نسخهٔ آزمایشی محلی • کلید خصوصی یا عبارت بازیابی وارد نکن.</footer>
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const keys=['projects','tasks','lessons'];
+function load(k){try{const v=JSON.parse(localStorage.getItem('cha2_'+k)||'[]');return Array.isArray(v)?v:[]}catch(e){return []}}
+function save(k,v){try{localStorage.setItem('cha2_'+k,JSON.stringify(v))}catch(e){alert('ذخیره‌سازی مرورگر در دسترس نیست؛ از پشتیبان استفاده کن.')}}
+let projects=load('projects'),tasks=load('tasks'),lessons=load('lessons');
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function empty(msg){return '<div class="empty">'+msg+'</div>'}
+function page(id){document.querySelectorAll('.page').forEach(s=>s.classList.toggle('active',s.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id))}
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>page(b.dataset.page)));
+document.querySelectorAll('[data-jump]').forEach(b=>b.addEventListener('click',()=>page(b.dataset.jump)));
+function toggleForm(id){$(id).classList.toggle('open')}
+$('addProject').onclick=()=>toggleForm('projectForm');$('addTask').onclick=()=>toggleForm('taskForm');$('addLesson').onclick=()=>toggleForm('lessonForm');
+document.querySelectorAll('[data-cancel]').forEach(b=>b.onclick=()=>$(b.dataset.cancel).classList.remove('open'));
+$('projectForm').onsubmit=e=>{e.preventDefault();let d=Object.fromEntries(new FormData(e.target));projects.unshift({...d,id:Date.now()});save('projects',projects);e.target.reset();e.target.classList.remove('open');render()};
+$('taskForm').onsubmit=e=>{e.preventDefault();let d=Object.fromEntries(new FormData(e.target));tasks.unshift({...d,id:Date.now(),done:false});save('tasks',tasks);e.target.reset();e.target.classList.remove('open');render()};
+$('lessonForm').onsubmit=e=>{e.preventDefault();let d=Object.fromEntries(new FormData(e.target));lessons.unshift({...d,id:Date.now(),date:new Date().toISOString()});save('lessons',lessons);e.target.reset();e.target.classList.remove('open');render()};
+function render(){
+$('statProjects').textContent=projects.length;$('statTasks').textContent=tasks.filter(t=>!t.done).length;$('statLessons').textContent=lessons.length;$('statReview').textContent=projects.filter(p=>!['listed','claimed'].includes(p.status)).length;
+$('projectList').innerHTML=projects.map(p=>`<article class="item"><div class="row"><b>${esc(p.name)}</b><button data-del-project="${p.id}">حذف</button></div><p class="muted">وضعیت: ${esc(p.status)} ${p.points?' • امتیاز: '+esc(p.points):''}</p>${p.deadline?'<p>مهلت: '+esc(p.deadline)+'</p>':''}${p.notes?'<p>'+esc(p.notes)+'</p>':''}</article>`).join('')||empty('هنوز پروژه‌ای ثبت نشده؛ روی «افزودن پروژه» بزن.');
+$('taskList').innerHTML=tasks.map(t=>`<article class="item"><div class="row"><b>${esc(t.title)}</b><button data-del-task="${t.id}">حذف</button></div><p class="muted">${esc(t.priority)} ${t.due?' • '+esc(t.due):''}</p><label><input style="width:auto" type="checkbox" data-done="${t.id}" ${t.done?'checked':''}> انجام شد</label></article>`).join('')||empty('هنوز کاری ثبت نشده است.');
+$('lessonList').innerHTML=lessons.map(l=>`<article class="item"><div class="row"><b>${esc(l.title)}</b><button data-del-lesson="${l.id}">حذف</button></div><p class="muted">${esc(l.result)} • ${new Date(l.date).toLocaleDateString('fa-IR')}</p><p><b>اتفاق:</b> ${esc(l.happened)}</p>${l.solution?'<p><b>راه‌حل امتحان‌شده:</b> '+esc(l.solution)+'</p>':''}</article>`).join('')||empty('هنوز تجربه‌ای ثبت نشده است.');
+let analysis=[];projects.filter(p=>!['listed','claimed'].includes(p.status)).forEach(p=>analysis.push('🪂 '+p.name+': وضعیت لیست‌شدن یا کلیم هنوز در این برنامه تأیید نشده؛ منبع رسمی را بررسی کن.'));
+projects.filter(p=>p.deadline).forEach(p=>{let days=Math.ceil((new Date(p.deadline+'T23:59:59')-new Date())/86400000);if(days<=3)analysis.push('📅 '+p.name+': مهلت نزدیک یا گذشته است ('+p.deadline+')؛ تاریخ را از منبع رسمی بررسی کن.')});
+lessons.filter(l=>l.result==='ناموفق').forEach(l=>analysis.push('🧠 تجربهٔ ناموفق «'+l.title+'» را قبل از تکرار راه‌حل مرور کن.'));
+$('analysisList').innerHTML=analysis.map(x=>'<article class="item">'+esc(x)+'</article>').join('')||empty('فعلاً هشداری از اطلاعات ثبت‌شده پیدا نشد؛ این به معنی تأیید اعتبار پروژه‌ها نیست.');
+document.querySelectorAll('[data-del-project]').forEach(b=>b.onclick=()=>{projects=projects.filter(x=>x.id!==Number(b.dataset.delProject));save('projects',projects);render()});
+document.querySelectorAll('[data-del-task]').forEach(b=>b.onclick=()=>{tasks=tasks.filter(x=>x.id!==Number(b.dataset.delTask));save('tasks',tasks);render()});
+document.querySelectorAll('[data-del-lesson]').forEach(b=>b.onclick=()=>{lessons=lessons.filter(x=>x.id!==Number(b.dataset.delLesson));save('lessons',lessons);render()});
+document.querySelectorAll('[data-done]').forEach(b=>b.onchange=()=>{let t=tasks.find(x=>x.id===Number(b.dataset.done));if(t)t.done=b.checked;save('tasks',tasks);render()});
+}
+
+const discKey='cha2_discovery_cache';
+function showDiscovery(items){
+ const box=$('discoverResults');
+ if(!items.length){box.innerHTML=empty('موردی از فید دریافت نشد. لینک‌های منابع بالا را باز کن و بعداً دوباره امتحان کن.');return;}
+ box.innerHTML=items.map((it,i)=>`<article class="item"><div class="row"><b>${esc(it.title||'بدون عنوان')}</b><button data-add-found="${i}">ثبت در پروژه‌ها</button></div><p class="muted">${esc(it.pubDate||'تاریخ نامشخص')} • منبع: Airdrops.io</p><p>${esc((it.description||'').replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').slice(0,360))}</p><a href="${esc(it.link||'https://airdrops.io/')}" target="_blank" rel="noopener" style="color:var(--accent)">باز کردن منبع</a></article>`).join('');
+ box.querySelectorAll('[data-add-found]').forEach(b=>b.onclick=()=>{const it=items[Number(b.dataset.addFound)];if(!it)return;const name=(it.title||'پروژه جدید').replace(/\s+/g,' ').slice(0,100);if(projects.some(p=>p.name.toLowerCase()===name.toLowerCase())){alert('این مورد قبلاً ثبت شده است.');return;}projects.unshift({id:Date.now(),name,status:'review',points:'',deadline:'',notes:'یافت‌شده از فید Airdrops.io. قبل از هر کاری سایت رسمی، شرایط پاداش و ریسک را بررسی کن. منبع: '+(it.link||'')});save('projects',projects);render();alert('به فهرست پروژه‌ها اضافه شد. هنوز اعتبار آن تأیید نشده است.');});
+}
+async function fetchFeedVia(url, kind){
+ const ctrl=new AbortController();const timer=setTimeout(()=>ctrl.abort(),12000);
+ try{
+  const res=await fetch(url,{signal:ctrl.signal,cache:'no-store'});
+  if(!res.ok)throw new Error('HTTP '+res.status);
+  if(kind==='json'){
+   const data=await res.json();
+   if(data.status!=='ok'||!Array.isArray(data.items))throw new Error('RSS JSON unavailable');
+   return data.items.map(x=>({title:x.title||'',link:x.link||'',pubDate:x.pubDate||'',description:x.description||x.content||''}));
+  }
+  const xml=await res.text();
+  const doc=new DOMParser().parseFromString(xml,'text/xml');
+  if(doc.querySelector('parsererror'))throw new Error('RSS parse error');
+  const nodes=[...doc.querySelectorAll('item')];
+  const items=nodes.map(n=>({title:n.querySelector('title')?.textContent||'',link:n.querySelector('link')?.textContent||'',pubDate:n.querySelector('pubDate')?.textContent||'',description:n.querySelector('description')?.textContent||''}));
+  if(!items.length)throw new Error('No RSS items');
+  return items;
+ }finally{clearTimeout(timer);}
+}
+$('discoverBtn').onclick=async()=>{
+ const status=$('discoverStatus'),box=$('discoverResults');
+ status.textContent='در حال امتحان چند مسیر دریافت…';$('discoverBtn').disabled=true;
+ const feed='https://airdrops.io/feed/';
+ const attempts=[
+  {name:'RSS2JSON',url:'https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(feed),kind:'json'},
+  {name:'AllOrigins',url:'https://api.allorigins.win/raw?url='+encodeURIComponent(feed),kind:'xml'},
+  {name:'CorsProxy',url:'https://corsproxy.io/?url='+encodeURIComponent(feed),kind:'xml'}
+ ];
+ let lastError=null;
+ try{
+  let items=null,used='';
+  for(const a of attempts){
+   try{items=await fetchFeedVia(a.url,a.kind);used=a.name;break;}
+   catch(e){lastError=e;}
+  }
+  if(!items||!items.length)throw lastError||new Error('No feed source responded');
+  items=items.slice(0,30);
+  localStorage.setItem(discKey,JSON.stringify({at:new Date().toISOString(),items,used}));
+  showDiscovery(items);status.textContent='موفق شد ('+used+') • '+new Date().toLocaleTimeString('fa-IR');
+ }catch(e){
+  status.textContent='دریافت مستقیم از منابع ناموفق بود';
+  box.innerHTML=empty('این خطا لزوماً به معنی قطع اینترنت نیست؛ ممکن است سرویس‌های دریافت فید در شبکهٔ تو مسدود باشند یا پاسخ ندهند. لینک‌های منابع بالا را می‌توانی باز کنی. اگر قبلاً فهرستی دریافت شده باشد، نسخهٔ ذخیره‌شده نمایش داده می‌شود. خطا: '+(e&&e.message?e.message:'نامشخص'));
+  try{const cached=JSON.parse(localStorage.getItem(discKey)||'null');if(cached&&Array.isArray(cached.items)){box.insertAdjacentHTML('afterbegin','<div class="note">نمایش نسخهٔ ذخیره‌شده از '+esc(new Date(cached.at).toLocaleString('fa-IR'))+'</div>');showDiscovery(cached.items);}}catch(_){}
+ }finally{$('discoverBtn').disabled=false;}
+};
+try{const cached=JSON.parse(localStorage.getItem(discKey)||'null');if(cached&&Array.isArray(cached.items)){showDiscovery(cached.items);$('discoverStatus').textContent='آخرین دریافت: '+new Date(cached.at).toLocaleString('fa-IR');}}catch(_){}
+
+$('exportBtn').onclick=()=>{const blob=new Blob([JSON.stringify({app:'Crypto Hunter AI',version:3,projects,tasks,lessons},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Crypto_Hunter_AI_Backup.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500)};
+$('importBtn').onclick=()=>{const f=$('importFile').files[0];if(!f){alert('اول فایل پشتیبان را انتخاب کن.');return}const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!Array.isArray(d.projects)||!Array.isArray(d.tasks)||!Array.isArray(d.lessons))throw Error();if(!confirm('اطلاعات فعلی جایگزین شود؟'))return;projects=d.projects;tasks=d.tasks;lessons=d.lessons;keys.forEach(k=>save(k,({projects,tasks,lessons})[k]));render();alert('بازیابی انجام شد.')}catch(e){alert('فایل پشتیبان معتبر نیست.')}};r.readAsText(f)};
+$('clearBtn').onclick=()=>{if(!confirm('همه اطلاعات این برنامه پاک شود؟'))return;keys.forEach(k=>localStorage.removeItem('cha2_'+k));projects=[];tasks=[];lessons=[];render()};
+render();
+})();
+</script>
+</body></html>
