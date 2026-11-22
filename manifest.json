@@ -1,0 +1,26 @@
+{
+  "id": "./",
+  "name": "Crypto Hunter AI",
+  "short_name": "Crypto Hunter",
+  "description": "پایش بازار، تحلیل رمزارزها، شکار فرصت‌ها و مدیریت هوشمند ریسک",
+  "lang": "fa",
+  "dir": "rtl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
+  "orientation": "portrait-primary",
+  "background_color": "#05070a",
+  "theme_color": "#050b14",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
