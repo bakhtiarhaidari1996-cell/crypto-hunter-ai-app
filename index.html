@@ -8079,7 +8079,7 @@ card();window.addEventListener('load',card)}catch(e){console.warn('health',e)}})
 <script id="wolf-intelligence-engine">
 (()=>{'use strict';
 const $=id=>document.getElementById(id),API='https://fapi.binance.com',NAMES=['روند و میانگین‌ها','شتاب قیمت','RSI و اشباع','MACD','حجم و جریان معامله','ساختار سقف و کف','Funding و ازدحام','نوسان و ریسک','منتقد مستقل'];
-const S={busy:false,last:null,report:null},num=x=>Number.isFinite(+x)?+x:0,fmt=x=>Number.isFinite(x)?x.toLocaleString('en-US',{maximumFractionDigits:x>=1000?2:x>=1?4:7}):'—';
+const S={busy:false,last:null,report:null};let wolfTimer=null;const num=x=>Number.isFinite(+x)?+x:0,fmt=x=>Number.isFinite(x)?x.toLocaleString('en-US',{maximumFractionDigits:x>=1000?2:x>=1?4:7}):'—';
 async function get(url,ms=11000){const c=new AbortController(),t=setTimeout(()=>c.abort(),ms);try{const r=await fetch(url,{cache:'no-store',signal:c.signal});if(!r.ok)throw Error('HTTP '+r.status);return await r.json()}finally{clearTimeout(t)}}
 const avg=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:0;
 function ema(a,n){let e=a[0]||0,k=2/(n+1);return a.map((v,i)=>i?(e=v*k+e*(1-k)):e)}
@@ -8116,9 +8116,9 @@ async function scan(){
   else{if(!S.last){empty('فعلاً فرصت الماسی پیدا نشد','هیچ دارایی از آستانه‌های کیفیت عبور نکرد. این بهتر از ساختن سیگنال ضعیف است.')}state('بدون فرصت معتبر',false);$('wolfReport').textContent=NAMES.length+' موتور تحلیلی، '+results.length+' دارایی را بررسی کردند؛ هیچ‌کدام تمام فیلترهای کیفیت را پاس نکردند.'}
   $('wolfScanned').textContent=results.length+' دارایی تحلیل شد';$('wolfUpdated').textContent='آخرین اسکن: '+new Date().toLocaleTimeString('fa-IR');
  }catch(e){if(!S.last)empty('اتصال یا داده کافی نیست','اسکن کامل نشد: '+String(e.message||e)+'؛ بعداً دوباره امتحان کن.');state('خطا در دریافت داده',false)}
- finally{S.busy=false;$('wolfRun').disabled=false;$('wolfRefresh').disabled=false;$('wolfProgress').classList.remove('on')}
+ finally{S.busy=false;$('wolfRun').disabled=false;$('wolfRefresh').disabled=false;$('wolfProgress').classList.remove('on');clearTimeout(wolfTimer);if(document.visibilityState==='visible'&&document.querySelector('#wolf.active'))wolfTimer=setTimeout(scan,300000)}
 }
-$('wolfRun').addEventListener('click',scan);$('wolfRefresh').addEventListener('click',scan);renderAgents();window.WOLF_INTELLIGENCE={scan,getState:()=>({busy:S.busy,last:S.last,report:S.report,agents:NAMES.length})};const baseShow=window.show;if(typeof baseShow==='function')window.show=function(id,btn){baseShow.apply(this,arguments);if(id==='wolf'&&!S.busy&&(!S.report||Date.now()-S.report.time>300000))setTimeout(scan,140)};
+$('wolfRun').addEventListener('click',scan);$('wolfRefresh').addEventListener('click',scan);renderAgents();document.addEventListener('visibilitychange',()=>{if(document.visibilityState!=='visible')clearTimeout(wolfTimer);else if(document.querySelector('#wolf.active')&&(!S.report||Date.now()-S.report.time>300000))scan()});window.WOLF_INTELLIGENCE={scan,getState:()=>({busy:S.busy,last:S.last,report:S.report,agents:NAMES.length})};const baseShow=window.show;if(typeof baseShow==='function')window.show=function(id,btn){baseShow.apply(this,arguments);if(id==='wolf'&&!S.busy&&(!S.report||Date.now()-S.report.time>300000))setTimeout(scan,140)};
 })();
 </script>
 </body></html>
