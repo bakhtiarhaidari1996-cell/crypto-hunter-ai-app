@@ -8118,7 +8118,7 @@ async function scan(){
  }catch(e){empty('اتصال یا داده کافی نیست','اسکن کامل نشد: '+String(e.message||e)+'؛ بعداً دوباره امتحان کن.');state('خطا در دریافت داده',false)}
  finally{S.busy=false;$('wolfRun').disabled=false;$('wolfRefresh').disabled=false;$('wolfProgress').classList.remove('on')}
 }
-$('wolfRun').addEventListener('click',scan);$('wolfRefresh').addEventListener('click',scan);renderAgents();window.WOLF_INTELLIGENCE={scan,getState:()=>({busy:S.busy,last:S.last,report:S.report,agents:NAMES.length})};
+$('wolfRun').addEventListener('click',scan);$('wolfRefresh').addEventListener('click',scan);renderAgents();window.WOLF_INTELLIGENCE={scan,getState:()=>({busy:S.busy,last:S.last,report:S.report,agents:NAMES.length})};const baseShow=window.show;if(typeof baseShow==='function')window.show=function(id,btn){baseShow.apply(this,arguments);if(id==='wolf'&&!S.busy&&(!S.report||Date.now()-S.report.time>300000))setTimeout(scan,140)};
 })();
 </script>
 </body></html>
