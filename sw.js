@@ -1,6 +1,6 @@
 "use strict";
 const CACHE_PREFIX="ch-pwa-shell-";
-const CACHE_NAME=CACHE_PREFIX+"v264-1";
+const CACHE_NAME=CACHE_PREFIX+"v264-2";
 const BASE=new URL("./",self.registration.scope);
 const SHELL=BASE.href;
 const STATIC=[new URL("manifest.json",BASE).href,new URL("icon.svg",BASE).href];
